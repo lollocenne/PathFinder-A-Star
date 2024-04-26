@@ -14,8 +14,11 @@ class Node:
         #   active: this node can be used to find the path
         #   target: target node
         #   used: this node has no more neighbors to use
-        #   wall: The path can not pass over this node
+        #   wall: the path can not pass over this node
+        #   path: this node is in the path
         self.state: str = None
+        
+        self.path: list = None
     
     def getGrid(self, grid) -> None:
         self.grid = grid

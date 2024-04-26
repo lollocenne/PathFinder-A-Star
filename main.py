@@ -17,6 +17,8 @@ COLS: int = 10
 #   contains the target node
 nodes: dict[str:list[Node], str:Node] = {"active": [], "target": None}
 
+path: list[Node] = []
+
 def creteGrid() -> None:
     for x in range(ROWS):
         col = []
@@ -33,6 +35,8 @@ def creteGrid() -> None:
     
     grid[startx][starty].state = "active"
     grid[ROWS-1][COLS-1].state = "target"
+    
+    grid[startx][starty].path = [grid[startx][starty]]
     
     for y in range(2, 10):
         grid[7][y].state = "wall"
@@ -58,11 +62,16 @@ def drawGrid() -> None:
                 pygame.draw.rect(WINDOW, (200, 0, 200), pygame.Rect(node.x * (NODE_SIZE + n), node.y * (NODE_SIZE + n), NODE_SIZE, NODE_SIZE))
             elif node.state == "wall":
                 pygame.draw.rect(WINDOW, (0, 0, 255), pygame.Rect(node.x * (NODE_SIZE + n), node.y * (NODE_SIZE + n), NODE_SIZE, NODE_SIZE))
-            
+            elif node.state == "path":
+                pygame.draw.rect(WINDOW, (0, 100, 0), pygame.Rect(node.x * (NODE_SIZE + n), node.y * (NODE_SIZE + n), NODE_SIZE, NODE_SIZE))
+
 def update():
     completed = isCompleted()
     
-    if not completed:
+    if completed:
+        for n in path:
+            n.state = "path"
+    else:
         nodes["active"].append(activateNode(nodes["active"], nodes["target"]))
 
 def isCompleted() -> bool:
@@ -73,7 +82,10 @@ def isCompleted() -> bool:
             
             #check if the node exist in the grid
             if x >= 0 and y >= 0 and x < ROWS and y < COLS:
-                if grid[x][y].state == "active":
+                if grid[x][y].state == "active" or grid[x][y].state == "path":
+                    grid[x][y].state = "path"
+                    path.extend(grid[x][y].path)
+                    
                     return True
 
 #this is the A* algorithm
@@ -82,6 +94,7 @@ def activateNode(activeNodes: list[Node], targetNode: Node) -> Node:
     
     possibleNode: Node = None
     possibleFValue: int = None
+    startNode: Node = None
     
     for n in activeNodes:
         n.updateNeighbors()
@@ -90,12 +103,17 @@ def activateNode(activeNodes: list[Node], targetNode: Node) -> Node:
             if possibleNode == None:
                 possibleNode = neighbor
                 possibleFValue = neighbor.f(n, targetNode)
+                startNode = n
             else:
                 if neighbor.f(n, targetNode) < possibleFValue:
                     possibleNode = neighbor
                     possibleFValue = neighbor.f(n, targetNode)
+                    startNode = n
         
     possibleNode.state = "active"
+    possibleNode.path = startNode.path.copy()
+    possibleNode.path.append(startNode)
+    
     return possibleNode
 
 #remove the non active node
