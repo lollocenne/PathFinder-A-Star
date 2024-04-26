@@ -74,6 +74,7 @@ def isCompleted() -> bool:
                 if grid[x][y].state == "active":
                     return True
 
+#this is the A* algorithm
 def activateNode(activeNodes: list[Node], targetNode: Node) -> Node:
     updateActiveNodes()
     
