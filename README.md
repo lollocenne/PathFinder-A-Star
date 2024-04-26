@@ -1,4 +1,4 @@
-#PathFinder A Star
+# PathFinder A Star
 
 This is an example of the [A star algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)</a>.
 
