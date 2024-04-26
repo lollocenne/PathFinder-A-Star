@@ -48,6 +48,8 @@ class Node:
         
         self.neighbors = self.getCloseNodes()
     
+    #remove the neighbors that can not be used (every node that is not None)
+    #change self.state to used if it has not neighbors
     def updateNeighbors(self) -> None:
         for n in self.neighbors:
             if n.state != None:

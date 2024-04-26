@@ -12,6 +12,9 @@ grid: list[list[Node]] = []
 ROWS: int = 15
 COLS: int = 10
 
+#nodes:
+#   contains a list of all the active node
+#   contains the target node
 nodes: dict[str:list[Node], str:Node] = {"active": [], "target": None}
 
 def creteGrid() -> None:
@@ -61,7 +64,6 @@ def update():
     
     if not completed:
         nodes["active"].append(activateNode(nodes["active"], nodes["target"]))
-        
 
 def isCompleted() -> bool:
     DIRECTIONS = {(0, 1), (1, 0), (0, -1), (-1, 0)}
@@ -96,6 +98,7 @@ def activateNode(activeNodes: list[Node], targetNode: Node) -> Node:
     possibleNode.state = "active"
     return possibleNode
 
+#remove the non active node
 def updateActiveNodes() -> None:
     for n in nodes["active"]:
         if n.state != "active":
