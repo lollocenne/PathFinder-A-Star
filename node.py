@@ -2,11 +2,9 @@ import math
 
 class Node:
     def __init__(self, x: int, y: int):
-        self.x = x
-        self.y = y
+        self.x, self.y = x, y
         
-        self.grid: list[list] = None
-        
+        self.grid: list[list] = None        
         self.neighbors: list = None
         
         #state:
@@ -19,11 +17,6 @@ class Node:
         self.state: str = None
         
         self.path: list = None
-    
-    def getGrid(self, grid) -> None:
-        self.grid = grid
-        
-        self.closeNodes = self.getCloseNodes()
     
     #return the list of all the closest node (up, right, down, left)
     def getCloseNodes(self) -> list:
@@ -72,7 +65,3 @@ class Node:
     #sum of g() and h()
     def f(self, node, endNode) -> bool:
         return self.g(node) + self.h(endNode)
-    
-    
-    def __str__(self) -> str:
-        return f"x: {self.x}; y:{self.y}"

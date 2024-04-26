@@ -2,15 +2,13 @@ import pygame
 from node import *
 
 
-WIDTH: int = 820
-HEIGHT: int = 570
+WIDTH, HEIGHT = 820, 570
 
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("PathFinder A*")
 
 grid: list[list[Node]] = []
-ROWS: int = 15
-COLS: int = 10
+ROWS, COLS = 15, 10
 
 #nodes:
 #   contains a list of all the active node
@@ -30,19 +28,20 @@ def creteGrid() -> None:
         for col in row:
             col.setNeighbors(grid)
     
-    startx = 0
-    starty = 2
+    startx, starty = 0, 2
     
+    #set the start
     grid[startx][starty].state = "active"
-    grid[ROWS-1][COLS-1].state = "target"
-    
     grid[startx][starty].path = [grid[startx][starty]]
+    nodes["active"].append(grid[startx][starty])
     
+    #set the end
+    grid[ROWS-1][COLS-1].state = "target"
+    nodes["target"] = grid[ROWS-1][COLS-1]
+    
+    #create walls
     for y in range(2, 10):
         grid[7][y].state = "wall"
-    
-    nodes["active"].append(grid[startx][starty])
-    nodes["target"] = grid[ROWS-1][COLS-1]
 
 creteGrid()
 
@@ -99,7 +98,7 @@ def activateNode(activeNodes: list[Node], targetNode: Node) -> Node:
     for n in activeNodes:
         n.updateNeighbors()
         
-        for neighbor in n.neighbors:            
+        for neighbor in n.neighbors:
             if possibleNode == None:
                 possibleNode = neighbor
                 possibleFValue = neighbor.f(n, targetNode)
@@ -133,7 +132,7 @@ def main():
     clock = pygame.time.Clock()
     
     while run:
-        clock.tick(20)
+        clock.tick(60)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
