@@ -1,5 +1,5 @@
 import pygame
-from a_star import *
+from node import *
 
 
 WIDTH: int = 820
