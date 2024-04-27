@@ -23,12 +23,11 @@ def creteGrid() -> None:
         for y in range(COLS):
             col.append(Node(x, y))
         grid.append(col)
-    
     for row in grid:
         for col in row:
             col.setNeighbors(grid)
     
-    startx, starty = 0, 2
+    startx, starty = 1, 8
     
     #set the start
     grid[startx][starty].state = "active"
@@ -44,6 +43,10 @@ def creteGrid() -> None:
         grid[7][y].state = "wall"
 
 creteGrid()
+
+for x in grid:
+    for n in x:
+        n.updateNeighbors()
 
 def drawGrid() -> None:
     NODE_SIZE: int = 50

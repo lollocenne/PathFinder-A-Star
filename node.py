@@ -34,7 +34,8 @@ class Node:
             
             #check if the node exist in the grid
             if x >= 0 and y >= 0 and x < GRID_ROWS and y < GRID_COLS:
-                closeNodes.append(self.grid[x][y])
+                if self.grid[x][y].state == None:
+                    closeNodes.append(self.grid[x][y])
         
         return closeNodes
     
