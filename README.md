@@ -2,7 +2,7 @@
 
 This is an example of the [A star algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)</a>.
 
-For a more genaral A star algorithm see my [other project on gitHub](https://github.com/lollocenne/PathFinder-A-Star-Extend)</a>.
+For a more genaral A star algorithm see my other [PathFinder A Star](https://github.com/lollocenne/PathFinder-A-Star-Extend)</a> on gitHub.
 
 > [!NOTE]
 > This algorithm can only be used in a grid (```[[node1, node2, ...], [node3, node4, ...], ...]```).
